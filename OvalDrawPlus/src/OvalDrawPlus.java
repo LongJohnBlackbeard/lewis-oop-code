@@ -35,10 +35,10 @@ class Oval extends JPanel {
 class OvalFrame extends JFrame {
     OvalFrame() {
         setTitle("OvalDraw");
-        setBounds(200,200,300,400);
+        setBounds(250,150,400,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Oval myOval = new Oval(0,255,255);
+        Oval myOval = new Oval(92,54,133);
         Container contentPane = getContentPane();
         contentPane.add(myOval);
     }
@@ -46,7 +46,7 @@ class OvalFrame extends JFrame {
 
 public class OvalDrawPlus {
     public static void main(String[] args) {
-        System.out.println("OvalDraw Starting...");
+        System.out.println("Starting OvalDrawPlus...");
         OvalFrame myFrame = new OvalFrame();
 
         myFrame.setVisible(true);
