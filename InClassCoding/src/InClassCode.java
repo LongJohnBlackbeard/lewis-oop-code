@@ -1,5 +1,4 @@
-public class DayOfTheWeek {
-
+public class InClassCode {
 
     public static void main(String[] args) {
 
