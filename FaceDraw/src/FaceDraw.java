@@ -90,7 +90,7 @@ class FacePanel extends JPanel {
     private Face myFace;
 
     public FacePanel() {
-        myFace = new Face(200,200,100,400,2);
+        myFace = new Face(200,300,450,250,0);
 
     }
 
