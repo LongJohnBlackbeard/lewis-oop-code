@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
 
 class OvalDraw extends Oval {
 
@@ -40,7 +42,6 @@ class Face extends OvalDraw{
         super(0,0,0,0);
         leftEye = new OvalDraw(0,0,0,0);
         rightEye = new OvalDraw(0,0,0,0);
-        smile = 0;
 
     }
 
@@ -59,6 +60,7 @@ class Face extends OvalDraw{
 
     }
 
+
     public void paintComponent(Graphics g) {
         super.painComponent(g);
         leftEye.painComponent(g);
@@ -70,11 +72,9 @@ class Face extends OvalDraw{
             g.drawArc(getPositionX(),getPositionY()+(getHeight()/2), getWidth()-10,getHeight()-10,
                     45, 90);
         } else {
-            g.drawArc(getPositionX(), getPositionY() + (getWidth()* 3), getWidth()-10,
+            g.drawArc(getPositionX(), getPositionY() + (getHeight()/ 2), getWidth()-10,
                     0, 220, 100);
         }
-
-
         g.setColor(Color.black);
 
     }
@@ -89,14 +89,28 @@ class generateRandom {
 class FacePanel extends JPanel {
     private Face myFace;
 
+    int faceNumber = generateRandom.getRandomValue(3,10);
+    ArrayList<Face> FaceList = new ArrayList<Face>();
+
     public FacePanel() {
-        myFace = new Face(200,300,450,250,0);
+        for (int i=0; i < faceNumber; i++)
+
+            myFace = new Face(generateRandom.getRandomValue(50,700),generateRandom.getRandomValue(50,700),
+                    generateRandom.getRandomValue(50,500),generateRandom.getRandomValue(50,500),
+                    generateRandom.getRandomValue(0,3));
+            System.out.println(myFace);
+
+            FaceList.add(myFace);
+
 
     }
 
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        myFace.paintComponent(g);
+
+        for(int i=0; i < FaceList.size(); i++){
+            super.paintComponent(g);
+            FaceList.get(i).paintComponent(g);
+        }
 
     }
 
