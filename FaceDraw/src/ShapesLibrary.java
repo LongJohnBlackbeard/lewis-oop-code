@@ -16,9 +16,7 @@ abstract class Shape {
     // bottom most locations.
 
 
-    public final void setSmiling(int smileIn) { smile = smileIn;}
-    public final int getSmiling() { return smile;}
-    private int smile;
+
 
     public final void setPositionX(int positionXIn) { positionX = positionXIn; }
     public final int getPositionX() { return positionX; }
@@ -37,15 +35,15 @@ abstract class Shape {
     private int height;
 
     public Shape() {
-        this(0,0,0,0,0);
+        this(0,0,0,0);
     }
 
-    public Shape(int positionXIn, int positionYIn, int widthIn, int heightIn, int smileIn) {
+    public Shape(int positionXIn, int positionYIn, int widthIn, int heightIn) {
         setPositionX(positionXIn);
         setPositionY(positionYIn);
         setWidth(widthIn);
         setHeight(heightIn);
-        setSmiling(smileIn);
+
     }
 
     protected static int OneOrGreater(int valueIn) {
@@ -76,7 +74,7 @@ class Rectangle extends Shape {
     }
 
     public Rectangle(int positionXIn, int positionYIn, int widthIn, int heightIn, int smileIn) {
-        super(positionXIn, positionYIn, widthIn, heightIn, smileIn);
+        super(positionXIn, positionYIn, widthIn, heightIn);
     }
 
     public double CalcArea() {
@@ -94,8 +92,8 @@ class Oval extends Shape {
         super();
     }
 
-    Oval(int positionXIn, int positionYIn, int widthIn, int heightIn, int smile) {
-        super(positionXIn, positionYIn, widthIn, heightIn, smile);
+    Oval(int positionXIn, int positionYIn, int widthIn, int heightIn) {
+        super(positionXIn, positionYIn, widthIn, heightIn);
     }
 
 
@@ -119,7 +117,7 @@ class Circle extends Oval {
     }
 
     Circle(int positionXIn, int positionYIn, int widthIn, int heightIn, int smileIn) {
-        super(positionXIn, positionYIn, widthIn, heightIn, smileIn);
+        super(positionXIn, positionYIn, widthIn, heightIn);
 
         // A circle's width and height should be the same.
         assert widthIn!=heightIn:"Width and Height must be equal in a circle.";
