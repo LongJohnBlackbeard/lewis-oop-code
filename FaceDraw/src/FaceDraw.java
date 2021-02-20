@@ -8,11 +8,11 @@ import java.util.ArrayList;
 class OvalDraw extends Oval {
 
     public OvalDraw() {
-        super(0,0,0,0);
+        super(0, 0, 0, 0);
     }
 
     public OvalDraw(int positionXIn, int positionYIn, int widthIn, int heightIn) {
-        super(positionXIn, positionYIn,widthIn, heightIn);
+        super(positionXIn, positionYIn, widthIn, heightIn);
     }
 
     public void painComponent(Graphics g) {
@@ -22,26 +22,44 @@ class OvalDraw extends Oval {
 
 }
 
-class Face extends OvalDraw{
-    public final void setAppHeight(int appHeightIn) { appHeight = appHeightIn;}
-    public final int getAppHeight() { return appHeight;}
+class Face extends OvalDraw {
+    public final void setAppHeight(int appHeightIn) {
+        appHeight = appHeightIn;
+    }
+
+    public final int getAppHeight() {
+        return appHeight;
+    }
+
     private int appHeight;
 
-    public final void setAppWidth(int appWidthIn) { appWidth = appWidthIn;}
-    public final int getAppWidth() { return appWidth;}
+    public final void setAppWidth(int appWidthIn) {
+        appWidth = appWidthIn;
+    }
+
+    public final int getAppWidth() {
+        return appWidth;
+    }
+
     private int appWidth;
 
-    public final void setSmiling(int smileIn) { smile = smileIn;}
-    public final int getSmiling() { return smile;}
+    public final void setSmiling(int smileIn) {
+        smile = smileIn;
+    }
+
+    public final int getSmiling() {
+        return smile;
+    }
+
     private int smile;
 
-    private OvalDraw leftEye;
-    private OvalDraw rightEye;
+    private final OvalDraw leftEye;
+    private final OvalDraw rightEye;
 
     public Face() {
-        super(0,0,0,0);
-        leftEye = new OvalDraw(0,0,0,0);
-        rightEye = new OvalDraw(0,0,0,0);
+        super(0, 0, 0, 0);
+        leftEye = new OvalDraw(0, 0, 0, 0);
+        rightEye = new OvalDraw(0, 0, 0, 0);
 
     }
 
@@ -66,13 +84,13 @@ class Face extends OvalDraw{
         leftEye.painComponent(g);
         rightEye.painComponent(g);
         if (smile == 0) {
-            g.drawArc(getPositionX(), getPositionY() - (getHeight()/6), getWidth()-10,
-                    getHeight()-10, 220, 100);
+            g.drawArc(getPositionX(), getPositionY() - (getHeight() / 6), getWidth() - 10,
+                    getHeight() - 10, 220, 100);
         } else if (smile == 1) {
-            g.drawArc(getPositionX(),getPositionY()+(getHeight()/2), getWidth()-10,getHeight()-10,
+            g.drawArc(getPositionX(), getPositionY() + (getHeight() / 2), getWidth() - 10, getHeight() - 10,
                     45, 90);
         } else {
-            g.drawArc(getPositionX(), getPositionY() + (getHeight()/ 2), getWidth()-10,
+            g.drawArc(getPositionX(), getPositionY() + (getHeight() / 2), getWidth() - 10,
                     0, 220, 100);
         }
         g.setColor(Color.black);
@@ -81,35 +99,36 @@ class Face extends OvalDraw{
 }
 
 class generateRandom {
-    public static int getRandomValue(int Min, int Max){
+    public static int getRandomValue(int Min, int Max) {
         return ThreadLocalRandom.current().nextInt(Min, Max + 1);
     }
 }
 
 class FacePanel extends JPanel {
-    private Face myFace;
 
-    int faceNumber = generateRandom.getRandomValue(3,10);
     ArrayList<Face> FaceList = new ArrayList<Face>();
 
+
+
     public FacePanel() {
-        for (int i=0; i < faceNumber; i++)
+        int faceNumber = generateRandom.getRandomValue(3, 10);
 
-            myFace = new Face(generateRandom.getRandomValue(50,700),generateRandom.getRandomValue(50,700),
-                    generateRandom.getRandomValue(50,500),generateRandom.getRandomValue(50,500),
-                    generateRandom.getRandomValue(0,3));
+        for (int i = 0; i < faceNumber; i++) {
+
+            Face myFace = new Face(generateRandom.getRandomValue(50, 700), generateRandom.getRandomValue(50, 700),
+                    generateRandom.getRandomValue(50, 500), generateRandom.getRandomValue(50, 500),
+                    generateRandom.getRandomValue(0, 3));
             System.out.println(myFace);
-
             FaceList.add(myFace);
 
-
+        }
     }
 
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for (Face face : FaceList) {
 
-        for(int i=0; i < FaceList.size(); i++){
-            super.paintComponent(g);
-            FaceList.get(i).paintComponent(g);
+            face.paintComponent(g);
         }
     }
 }
@@ -119,7 +138,7 @@ public class FaceDraw {
         System.out.println("FaceDraw");
 
         JFrame myFrame = new JFrame("Random Faces FaceDraw");
-        myFrame.setBounds(100,100, 900,900);
+        myFrame.setBounds(100, 100, 900, 900);
         myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 

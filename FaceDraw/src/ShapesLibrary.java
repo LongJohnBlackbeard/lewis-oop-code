@@ -116,7 +116,7 @@ class Circle extends Oval {
         super();
     }
 
-    Circle(int positionXIn, int positionYIn, int widthIn, int heightIn, int smileIn) {
+    Circle(int positionXIn, int positionYIn, int widthIn, int heightIn) {
         super(positionXIn, positionYIn, widthIn, heightIn);
 
         // A circle's width and height should be the same.
