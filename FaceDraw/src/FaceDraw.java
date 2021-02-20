@@ -111,9 +111,7 @@ class FacePanel extends JPanel {
             super.paintComponent(g);
             FaceList.get(i).paintComponent(g);
         }
-
     }
-
 }
 
 public class FaceDraw {
