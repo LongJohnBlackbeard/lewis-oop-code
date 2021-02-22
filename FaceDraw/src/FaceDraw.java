@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
+import java.awt.geom.Line2D;
+import java.awt.*;
 
 class OvalDraw extends Oval {
 
@@ -18,6 +20,10 @@ class OvalDraw extends Oval {
     public void painComponent(Graphics g) {
 
         g.drawOval(getPositionX(), getPositionY(), getWidth(), getHeight());
+        g.setColor(Color.getHSBColor(generateRandom.getRandomValue((float) 0,(float) 360),
+                generateRandom.getRandomValue((float) 0.50,(float) 1.0),
+                generateRandom.getRandomValue((float) 0.50,(float) 1.0)));
+        g.fillOval(getPositionX(),getPositionY(),getWidth(),getHeight());
 
     }
 
@@ -97,6 +103,7 @@ class generateRandom {
     public static int getRandomValue(int Min, int Max) {
         return ThreadLocalRandom.current().nextInt(Min, Max + 1);
     }
+    public static float getRandomValue(float Min, float Max) { return ThreadLocalRandom.current().nextFloat(); }
 }
 
 class FacePanel extends JPanel {
