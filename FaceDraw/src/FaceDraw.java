@@ -68,7 +68,7 @@ class Face extends OvalDraw {
         setAppHeight(900);
 
 
-        int eyeHeight = (getHeight() / 4) ;
+        int eyeHeight = getHeight() / 4 ;
         int eyeWidth = getWidth() / 5;
         int leftEyePositionX = getPositionX() + (getWidth() / 5) - (eyeHeight / 7);
         int eyePositionY = getPositionY() + (getHeight() / 3) - (eyeHeight / 2);
