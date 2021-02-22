@@ -25,6 +25,7 @@ class OvalDraw extends Oval {
                 generateRandom.getRandomValue((float) 0.50,(float) 1.0)));
         g.fillOval(getPositionX(),getPositionY(),getWidth(),getHeight());
 
+
     }
 
 
@@ -82,6 +83,7 @@ class Face extends OvalDraw {
 
     public void paintComponent(Graphics g) {
         super.painComponent(g);
+
         leftEye.painComponent(g);
         rightEye.painComponent(g);
         if (getSmiling() == 0) {
@@ -94,6 +96,7 @@ class Face extends OvalDraw {
             g.drawArc(getPositionX(), getPositionY() + (getHeight() / 2), getWidth() - 10,
                     0, 220, 100);
         }
+
 
 
     }
@@ -114,9 +117,11 @@ class FacePanel extends JPanel {
 
         for (int i = 0; i < faceNumber; i++) {
 
+
             Face myFace = new Face();
             String face = myFace.toString();
             System.out.println(face);
+
             FaceList.add(myFace);
 
         }
