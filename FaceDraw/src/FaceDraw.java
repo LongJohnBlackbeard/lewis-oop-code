@@ -84,10 +84,10 @@ class Face extends OvalDraw {
         super.painComponent(g);
         leftEye.painComponent(g);
         rightEye.painComponent(g);
-        if (smile == 0) {
+        if (getSmiling() == 0) {
             g.drawArc(getPositionX(), getPositionY() - (getHeight() / 6), getWidth() - 10,
                     getHeight() - 10, 220, 100);
-        } else if (smile == 1) {
+        } else if (getSmiling() == 1) {
             g.drawArc(getPositionX(), getPositionY() + (getHeight() / 2), getWidth() - 10, getHeight() - 10,
                     45, 90);
         } else {
