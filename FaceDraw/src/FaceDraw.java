@@ -16,45 +16,33 @@ class OvalDraw extends Oval {
     }
 
     public void painComponent(Graphics g) {
+
         g.drawOval(getPositionX(), getPositionY(), getWidth(), getHeight());
+
     }
 
 
 }
 
 class Face extends OvalDraw {
-    public final void setAppHeight(int appHeightIn) {
-        appHeight = appHeightIn;
-    }
-
-    public final int getAppHeight() {
-        return appHeight;
-    }
-
+    public final void setAppHeight(int appHeightIn) { appHeight = appHeightIn; }
+    public final int getAppHeight() { return appHeight; }
     private int appHeight;
 
-    public final void setAppWidth(int appWidthIn) {
-        appWidth = appWidthIn;
-    }
-
-    public final int getAppWidth() {
-        return appWidth;
-    }
-
+    public final void setAppWidth(int appWidthIn) { appWidth = appWidthIn; }
+    public final int getAppWidth() { return appWidth; }
     private int appWidth;
 
-    public final void setSmiling(int smileIn) {
-        smile = smileIn;
-    }
-
-    public final int getSmiling() {
-        return smile;
-    }
-
+    public final void setSmiling(int smileIn) { smile = smileIn; }
+    public final int getSmiling() { return smile; }
     private int smile;
 
     private final OvalDraw leftEye;
     private final OvalDraw rightEye;
+
+
+
+
 
     public Face(int positionXIn, int positionYIn, int widthIn, int heightIn, int smileIn) {
         super(0, 0, 0, 0);
@@ -69,6 +57,9 @@ class Face extends OvalDraw {
         setWidth(generateRandom.getRandomValue(100, 500));
         setHeight(generateRandom.getRandomValue(100, 500));
         setSmiling(generateRandom.getRandomValue(0, 3));
+
+        setAppWidth(900);
+        setAppHeight(900);
 
 
         int eyeHeight = (getHeight() / 4) ;
@@ -97,7 +88,7 @@ class Face extends OvalDraw {
             g.drawArc(getPositionX(), getPositionY() + (getHeight() / 2), getWidth() - 10,
                     0, 220, 100);
         }
-        g.setColor(Color.black);
+
 
     }
 }
@@ -111,9 +102,6 @@ class generateRandom {
 class FacePanel extends JPanel {
 
     ArrayList<Face> FaceList = new ArrayList<Face>();
-
-
-
     public FacePanel() {
         int faceNumber = generateRandom.getRandomValue(3, 10);
 
