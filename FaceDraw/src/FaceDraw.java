@@ -56,22 +56,26 @@ class Face extends OvalDraw {
     private final OvalDraw leftEye;
     private final OvalDraw rightEye;
 
-    public Face() {
+    public Face(int positionXIn, int positionYIn, int widthIn, int heightIn, int smileIn) {
         super(0, 0, 0, 0);
         leftEye = new OvalDraw(0, 0, 0, 0);
         rightEye = new OvalDraw(0, 0, 0, 0);
 
     }
 
-    public Face(int positionXIn, int positionYIn, int widthIn, int heightIn, int smileIn) {
-        super(positionXIn, positionYIn, widthIn, heightIn);
-        setSmiling(smileIn);
+    public Face() {
+        setPositionX(generateRandom.getRandomValue(50, 700));
+        setPositionY(generateRandom.getRandomValue(50, 700));
+        setWidth(generateRandom.getRandomValue(100, 500));
+        setHeight(generateRandom.getRandomValue(100, 500));
+        setSmiling(generateRandom.getRandomValue(0, 3));
 
-        int eyeHeight = heightIn / 5;
-        int eyeWidth = widthIn / 4;
-        int leftEyePositionX = positionXIn + (widthIn / 5) - (eyeHeight / 7);
-        int eyePositionY = positionYIn + (heightIn / 3) - (eyeHeight / 2);
-        int rightEyePositionX = positionXIn + (widthIn / 2) + (eyeHeight / 5);
+
+        int eyeHeight = (getHeight() / 4) ;
+        int eyeWidth = getWidth() / 5;
+        int leftEyePositionX = getPositionX() + (getWidth() / 5) - (eyeHeight / 7);
+        int eyePositionY = getPositionY() + (getHeight() / 3) - (eyeHeight / 2);
+        int rightEyePositionX = getPositionX() + (getWidth() / 2) + (eyeHeight / 5);
         leftEye = new OvalDraw(leftEyePositionX, eyePositionY, eyeWidth, eyeHeight);
         rightEye = new OvalDraw(rightEyePositionX, eyePositionY, eyeWidth, eyeHeight);
 
@@ -115,10 +119,9 @@ class FacePanel extends JPanel {
 
         for (int i = 0; i < faceNumber; i++) {
 
-            Face myFace = new Face(generateRandom.getRandomValue(50, 700), generateRandom.getRandomValue(50, 700),
-                    generateRandom.getRandomValue(50, 500), generateRandom.getRandomValue(50, 500),
-                    generateRandom.getRandomValue(0, 3));
-            System.out.println(myFace);
+            Face myFace = new Face();
+            String face = myFace.toString();
+            System.out.println(face);
             FaceList.add(myFace);
 
         }
