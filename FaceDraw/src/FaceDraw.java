@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.awt.geom.Line2D;
 import java.awt.*;
 
-class OvalDraw extends Oval {
+class OvalDraw extends Oval {  //child class of oval, parent class for face class, draws regular oval
 
     public OvalDraw() {
         super(0, 0, 0, 0);
@@ -17,7 +17,7 @@ class OvalDraw extends Oval {
         super(positionXIn, positionYIn, widthIn, heightIn);
     }
 
-    public void painComponent(Graphics g) {
+    public void painComponent(Graphics g) {     // Sets random colors for all features
 
         g.drawOval(getPositionX(), getPositionY(), getWidth(), getHeight());
         g.setColor(Color.getHSBColor(generateRandom.getRandomValue((float) 0,(float) 360),
@@ -32,14 +32,15 @@ class OvalDraw extends Oval {
 }
 
 class Face extends OvalDraw {
+    // setter and getter for app height
     public final void setAppHeight(int appHeightIn) { appHeight = appHeightIn; }
     public final int getAppHeight() { return appHeight; }
     private int appHeight;
-
+    //setter and getter for app width
     public final void setAppWidth(int appWidthIn) { appWidth = appWidthIn; }
     public final int getAppWidth() { return appWidth; }
     private int appWidth;
-
+    //setter and getter for smiling
     public final void setSmiling(int smileIn) { smile = smileIn; }
     public final int getSmiling() { return smile; }
     private int smile;
@@ -50,16 +51,18 @@ class Face extends OvalDraw {
 
 
 
-
+    //default constructor for face class
     public Face(int positionXIn, int positionYIn, int widthIn, int heightIn, int smileIn) {
         super(0, 0, 0, 0);
         leftEye = new OvalDraw(0, 0, 0, 0);
         rightEye = new OvalDraw(0, 0, 0, 0);
+        setAppHeight(0);
+        setAppWidth(0);
 
     }
-
+    // constructor that sets attributes
     public Face() {
-        setPositionX(generateRandom.getRandomValue(50, 700));
+        setPositionX(generateRandom.getRandomValue(50, 700));   //these sets the random values
         setPositionY(generateRandom.getRandomValue(50, 700));
         setWidth(generateRandom.getRandomValue(100, 500));
         setHeight(generateRandom.getRandomValue(100, 500));
@@ -69,8 +72,8 @@ class Face extends OvalDraw {
         setAppHeight(900);
 
 
-        int eyeHeight = getHeight() / 4 ;
-        int eyeWidth = getWidth() / 5;
+        int eyeHeight = getHeight() / 4 ;       //these calculate the eyes relative to the size of the random
+        int eyeWidth = getWidth() / 5;          // generated ovl
         int leftEyePositionX = getPositionX() + (getWidth() / 5) - (eyeHeight / 7);
         int eyePositionY = getPositionY() + (getHeight() / 3) - (eyeHeight / 2);
         int rightEyePositionX = getPositionX() + (getWidth() / 2) + (eyeHeight / 5);
@@ -80,7 +83,8 @@ class Face extends OvalDraw {
 
     }
 
-
+    // Face class paint component, combines the oval, and eyes, and a if statement for the smile
+    // depending on the random number generated, there will be a smile, frown, or neutral.
     public void paintComponent(Graphics g) {
         super.painComponent(g);
 
@@ -90,7 +94,8 @@ class Face extends OvalDraw {
             g.drawArc(getPositionX(), getPositionY() - (getHeight() / 6), getWidth() - 10,
                     getHeight() - 10, 220, 100);
         } else if (getSmiling() == 1) {
-            g.drawArc(getPositionX(), getPositionY() + (getHeight() / 2), getWidth() - 10, getHeight() - 10,
+            g.drawArc(getPositionX(), getPositionY() + (getHeight() / 2), getWidth() - 10,
+                    getHeight() - 10,
                     45, 90);
         } else {
             g.drawArc(getPositionX(), getPositionY() + (getHeight() / 2), getWidth() - 10,
@@ -101,9 +106,10 @@ class Face extends OvalDraw {
 
     }
 }
-
+// Container class that hold two random number generator methods, one for integers, the other for floats
 class generateRandom {
     public static int getRandomValue(int Min, int Max) {
+
         return ThreadLocalRandom.current().nextInt(Min, Max + 1);
     }
     public static float getRandomValue(float Min, float Max) { return ThreadLocalRandom.current().nextFloat(); }
@@ -111,31 +117,31 @@ class generateRandom {
 
 class FacePanel extends JPanel {
 
-    ArrayList<Face> FaceList = new ArrayList<Face>();
+    ArrayList<Face> FaceList = new ArrayList<Face>(); // creates an array list to store faces
     public FacePanel() {
-        int faceNumber = generateRandom.getRandomValue(3, 10);
+        int faceNumber = generateRandom.getRandomValue(3, 10);  //calculates how many faces will be drawn
 
-        for (int i = 0; i < faceNumber; i++) {
+        for (int i = 0; i < faceNumber; i++) { //for loop for how many faces will be drawn
 
 
-            Face myFace = new Face();
-            String face = myFace.toString();
+            Face myFace = new Face();       //creates face object
+            String face = myFace.toString(); //to string that prints out face demensions
             System.out.println(face);
 
-            FaceList.add(myFace);
+            FaceList.add(myFace);       // adds face object to arraylist
 
         }
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void paintComponent(Graphics g) {        //draws for loop that draws the face for every obj in the
+        super.paintComponent(g);                // array list
         for (Face face : FaceList) {
 
             face.paintComponent(g);
         }
     }
 }
-
+// FaceDraw class with main method, that creates JFrame and FacePanel obj
 public class FaceDraw {
     public static void main(String[] args) {
         System.out.println("FaceDraw");
