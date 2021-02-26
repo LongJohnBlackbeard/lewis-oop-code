@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.awt.geom.Line2D;
 import java.awt.*;
 
+// Credit to Eric Pogue for ShapesLibrary.java used in this program
+
 class OvalDraw extends Oval {  //child class of oval, parent class for face class, draws regular oval
 
     public OvalDraw() {

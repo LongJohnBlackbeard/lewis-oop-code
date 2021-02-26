@@ -9,15 +9,8 @@
  *****************************************************************************/
 
 abstract class Shape {
-
-
-
     // The positionX and positionY values are intended to be the left most and
     // bottom most locations.
-
-
-
-
     public final void setPositionX(int positionXIn) { positionX = positionXIn; }
     public final int getPositionX() { return positionX; }
     private int positionX;
@@ -43,7 +36,6 @@ abstract class Shape {
         setPositionY(positionYIn);
         setWidth(widthIn);
         setHeight(heightIn);
-
     }
 
     protected static int OneOrGreater(int valueIn) {
