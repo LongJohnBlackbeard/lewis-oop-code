@@ -96,12 +96,29 @@ class LetterTile extends JPanel implements MouseListener{
     private boolean condition = false;
 
 
+
+
+
     LetterTile() {
         super();
         SetRandomRGB();
         SetRandomLetter();
         SetRandomShape();
+        toStringMeth();
         this.addMouseListener(this);
+
+
+    }
+    final public void toStringMeth(){
+        String letterShape;
+        if (shape == 1) {
+            letterShape = "Square";
+        } else {
+            letterShape = "Circle";
+        }
+        String sf=String.format("LetterTile Letter: %s, Shape: %s, R: %d, G: %d, B: %d", letter,
+                                letterShape, red, green, blue );
+        System.out.println(sf);
 
     }
 
@@ -140,7 +157,7 @@ class LetterTile extends JPanel implements MouseListener{
         int panelWidth = getWidth();
         int panelHeight = getHeight();
 
-        if (condition == false) {
+        if (!condition) {
             g.setColor(new Color(red, green, blue));
             if (shape == 1) {
                 g.fillRect(0, 0, panelWidth, panelHeight);
@@ -158,28 +175,19 @@ class LetterTile extends JPanel implements MouseListener{
             int stringX = (int) ((getWidth() - (int) bounds.getWidth()) / 2);
             int stringY = (int) ((getHeight() / 2) + (int) (bounds.getHeight() / 2));
             g.drawString(letter, stringX, stringY);
-            repaint();
+
         } else {
             myFace.paintComponent(g);
-            repaint();
 
         }
+        repaint();
     }
 
 
     @Override
     public void mouseClicked(MouseEvent e) {
 
-        if (condition == false) {
-            condition = true;
-        } else {
-            condition = false;
-        }
-        System.out.println(condition);
-
-
-
-
+        condition = !condition;
 
     }
 
@@ -248,6 +256,7 @@ class MosaicFrame extends JFrame implements ActionListener {
             tile.SetRandomRGB();
             tile.SetRandomLetter();
             tile.SetRandomShape();
+            tile.toStringMeth();
         }
         repaint();
     }
