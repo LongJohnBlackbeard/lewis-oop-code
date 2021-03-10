@@ -23,6 +23,10 @@ class Face extends JPanel {
     private int leftEyePositionY;
     private int rightEyePositionX;
     private int rightEyePositionY;
+    private int red;
+    private int green;
+    private int blue;
+
 
     // constructor that sets attributes
     public Face() {
@@ -33,31 +37,45 @@ class Face extends JPanel {
     }
 
     public Face(int width, int height) {
-        leftEyePositionX = width -20;
-        leftEyePositionY = height -20;
-        rightEyePositionX = width + 20;
-        rightEyePositionY = height + 20;
+        leftEyePositionX = 23;
+        leftEyePositionY = 20;
+        rightEyePositionX = 43;
+        rightEyePositionY = 20;
+        red = generateRandom.getRandomValue(0, 255);
+        green = generateRandom.getRandomValue(0,255);
+        blue = generateRandom.getRandomValue(0, 255);
         smile = generateRandom.getRandomValue(0,3);
 
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         g.setColor(Color.BLACK);
-        g.drawOval(leftEyePositionX, leftEyePositionY, 20, 20);
-        g.drawOval(rightEyePositionX, rightEyePositionY, 20, 20);
+        g.drawOval(5,5,65,65);
+        g.setColor(new Color(generateRandom.getRandomValue(0, 255),
+                generateRandom.getRandomValue(0, 255),
+                generateRandom.getRandomValue(0, 255)));
+        g.fillOval(5,5,65,65);
+        g.setColor(Color.BLACK);
+        g.drawOval(leftEyePositionX, leftEyePositionY, 10, 10);
+        g.setColor(new Color(red,green,blue));
+        g.fillOval(leftEyePositionX, rightEyePositionY, 10, 10);
+
+        g.setColor(Color.BLACK);
+        g.drawOval(rightEyePositionX, rightEyePositionY, 10, 10);
+        g.setColor(new Color(red, green, blue));
+        g.fillOval(rightEyePositionX, rightEyePositionY, 10, 10);
+
+
 
 
         if (getSmiling() == 0) {
-            g.drawArc(0, 0, getWidth() - 10,
-                    getHeight() - 10, 220, 100);
+            g.drawArc(23, 30, 30, 20, 220, 100);
         } else if (getSmiling() == 1) {
-            g.drawArc(0, 0, getWidth() - 10,
-                    getHeight() - 10,
-                    45, 90);
+            g.drawArc(23, 45, 30, 20, 45, 90);
         } else {
-            g.drawArc(0, 0, getWidth() - 10,
-                    0, 220, 100);
+            g.drawArc(23, 45, 30, 0, 220, 100);
         }
     }
 }
@@ -70,10 +88,12 @@ class generateRandom {
     public static float getRandomValue(float Min, float Max) { return ThreadLocalRandom.current().nextFloat(); }
 }
 
-class LetterTile extends JPanel{
+class LetterTile extends JPanel implements MouseListener{
     private int red, green, blue;
     private String letter;
     private int shape;
+    Face myFace = new Face(getWidth(),getHeight());
+    private boolean condition = false;
 
 
     LetterTile() {
@@ -81,8 +101,10 @@ class LetterTile extends JPanel{
         SetRandomRGB();
         SetRandomLetter();
         SetRandomShape();
+        this.addMouseListener(this);
 
     }
+
     final public void SetRandomShape() {
         shape = ThreadLocalRandom.current().nextInt(0,2);
 
@@ -114,37 +136,78 @@ class LetterTile extends JPanel{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+
         int panelWidth = getWidth();
         int panelHeight = getHeight();
 
+        if (condition == false) {
+            g.setColor(new Color(red, green, blue));
+            if (shape == 1) {
+                g.fillRect(0, 0, panelWidth, panelHeight);
+            } else {
+                g.fillOval(0, 0, panelWidth, panelHeight);
+            }
+            g.setColor(new Color(ContrastRGB(red), ContrastRGB(green), ContrastRGB(blue)));
 
-
-
-        g.setColor(new Color(red,green,blue));
-        if (shape == 1) {
-            g.fillRect(0,0,panelWidth, panelHeight);
+            final int fontsize = 30;
+            g.setFont(new Font("Times New Roman", Font.BOLD, fontsize));
+            FontRenderContext context = g.getFontMetrics().getFontRenderContext();
+            Font messageTextFont = new Font("Times New Roman", Font.BOLD, fontsize);
+            TextLayout txt = new TextLayout(letter, messageTextFont, context);
+            Rectangle2D bounds = txt.getBounds();
+            int stringX = (int) ((getWidth() - (int) bounds.getWidth()) / 2);
+            int stringY = (int) ((getHeight() / 2) + (int) (bounds.getHeight() / 2));
+            g.drawString(letter, stringX, stringY);
+            repaint();
         } else {
-            g.fillOval(0,0,panelWidth, panelHeight);
+            myFace.paintComponent(g);
+            repaint();
+
         }
+    }
 
 
-        g.setColor(new Color(ContrastRGB(red), ContrastRGB(green), ContrastRGB(blue)));
+    @Override
+    public void mouseClicked(MouseEvent e) {
 
-        final int fontsize= 30 ;
-        g.setFont(new Font("Times New Roman", Font.BOLD, fontsize));
-        FontRenderContext context = g.getFontMetrics().getFontRenderContext();
-        Font messageTextFont = new Font("Times New Roman", Font.BOLD, fontsize);
-        TextLayout txt = new TextLayout(letter, messageTextFont, context);
-        Rectangle2D bounds = txt.getBounds();
-        int stringX = (int)((getWidth()-(int)bounds.getWidth()) / 2);
-        int stringY = (int)((getHeight()/2)+(int)(bounds.getHeight()/2));
-        g.drawString(letter, stringX,stringY);
+        if (condition == false) {
+            condition = true;
+        } else {
+            condition = false;
+        }
+        System.out.println(condition);
+
+
+
+
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent r) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent r) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent r) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent r) {
+
     }
 }
 
 class MosaicFrame extends JFrame implements ActionListener {
     private ArrayList<LetterTile> letterList;
     private ArrayList<Face> faceList;
+    private LetterTile Tilling[][];
 
 
     public MosaicFrame() {
@@ -171,7 +234,6 @@ class MosaicFrame extends JFrame implements ActionListener {
 
         faceList = new ArrayList<Face>();
         letterList = new ArrayList<LetterTile>();
-
 
         for(int i=1; i<145; i++) {
 
