@@ -1,8 +1,12 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import java.awt.Graphics;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
@@ -12,7 +16,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-
+// Face class that creates a face object when called.
 class Face extends JPanel {
 
     //setter and getter for smiling
@@ -28,14 +32,14 @@ class Face extends JPanel {
     private int blue;
 
 
-    // constructor that sets attributes
+    // default constructor
     public Face() {
         leftEyePositionX = 0;
         leftEyePositionY = 0;
         rightEyePositionX = 0;
         rightEyePositionY = 0;
     }
-
+    // constructor the sets attributes
     public Face(int width, int height) {
         leftEyePositionX = 23;
         leftEyePositionY = 20;
@@ -47,7 +51,7 @@ class Face extends JPanel {
         smile = generateRandom.getRandomValue(0,3);
 
     }
-
+    //paint component that draws the face
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -69,7 +73,7 @@ class Face extends JPanel {
 
 
 
-
+        // smiling if statement that sets what smile the face uses
         if (getSmiling() == 0) {
             g.drawArc(23, 30, 30, 20, 220, 100);
         } else if (getSmiling() == 1) {
@@ -80,6 +84,7 @@ class Face extends JPanel {
     }
 }
 
+// Container class that contains generate random methods
 class generateRandom {
     public static int getRandomValue(int Min, int Max) {
 
@@ -88,6 +93,7 @@ class generateRandom {
     public static float getRandomValue(float Min, float Max) { return ThreadLocalRandom.current().nextFloat(); }
 }
 
+// Lettetile class the create letter tile object, implements mouse listener
 class LetterTile extends JPanel implements MouseListener{
     private int red, green, blue;
     private String letter;
@@ -95,10 +101,7 @@ class LetterTile extends JPanel implements MouseListener{
     Face myFace = new Face(getWidth(),getHeight());
     private boolean condition = false;
 
-
-
-
-
+    // LetterTile constructor that sets all attributes
     LetterTile() {
         super();
         SetRandomRGB();
@@ -106,9 +109,8 @@ class LetterTile extends JPanel implements MouseListener{
         SetRandomShape();
         toStringMeth();
         this.addMouseListener(this);
-
-
     }
+    // To string method that prints to terminal the tile attributes
     final public void toStringMeth(){
         String letterShape;
         if (shape == 1) {
@@ -121,35 +123,31 @@ class LetterTile extends JPanel implements MouseListener{
         System.out.println(sf);
 
     }
-
+    // method that sets random shape for the tile.
     final public void SetRandomShape() {
         shape = ThreadLocalRandom.current().nextInt(0,2);
-
     }
-
+    // method that sets random letter for the tile
     final public void SetRandomLetter() {
         Random rnd = new Random();
         char c = (char) ('A' + rnd.nextInt(26));
         letter = String.valueOf(c);
-
-
     }
+    // method that sets random rgb values for the tile
     final public void SetRandomRGB() {
         red = RandomRGB(0, 255);
         green = RandomRGB(0, 255);
         blue = RandomRGB(0, 255);
-
     }
-
+    // method that sets random rgb value for letter in the tile
     private static int ContrastRGB(int colorIn) {
         return ((colorIn + 128) % 256);
     }
-
+    // method that calulcates random values for set rgb values.
     private static int RandomRGB(int min, int max) {
         return ThreadLocalRandom.current().nextInt(min, max +1);
-
     }
-
+    // paint component for letter tile
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -157,6 +155,8 @@ class LetterTile extends JPanel implements MouseListener{
         int panelWidth = getWidth();
         int panelHeight = getHeight();
 
+        // uses if statement on a condition that is set from the mouselistener
+        // condition false sets the tile as a lettertile, true sets it to a face.
         if (!condition) {
             g.setColor(new Color(red, green, blue));
             if (shape == 1) {
@@ -183,10 +183,10 @@ class LetterTile extends JPanel implements MouseListener{
         repaint();
     }
 
-
+    // mouse listeners
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        // uses mouseclicked event as a toggle for condition
         condition = !condition;
 
     }
@@ -211,38 +211,32 @@ class LetterTile extends JPanel implements MouseListener{
 
     }
 }
-
+// JFrame class
 class MosaicFrame extends JFrame implements ActionListener {
     private ArrayList<LetterTile> letterList;
-    private ArrayList<Face> faceList;
-    private LetterTile Tilling[][];
 
-
+    // constructor for the Frame
     public MosaicFrame() {
         setBounds(50,50,972,972);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        //creates container for panels
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
-
+        // creates a jpanel button pannel with a border layer
         JPanel buttonPanel = new JPanel();
         contentPane.add(buttonPanel, BorderLayout.SOUTH);
-
+        // creates a jbutton for randomize and adds it to the buttonpanel
         JButton randomize = new JButton("Randomize!");
         buttonPanel.add(randomize);
         randomize.addActionListener(this);
-
-        JPanel faceGridPanel = new JPanel();
-        contentPane.add(faceGridPanel, BorderLayout.CENTER);
-        faceGridPanel.setLayout(new GridLayout(12,12));
-
+        // creates panel for lettertile as a grid layer 12x12
         JPanel letterGridPanel = new JPanel();
         contentPane.add(letterGridPanel, BorderLayout.CENTER);
         letterGridPanel.setLayout(new GridLayout(12,12));
 
-        faceList = new ArrayList<Face>();
+        // creates arraylist to hold lettertiles
         letterList = new ArrayList<LetterTile>();
-
+        // for loop that generates tiles and adds them to arraylist
         for(int i=1; i<145; i++) {
 
             LetterTile tile = new LetterTile();
@@ -250,7 +244,7 @@ class MosaicFrame extends JFrame implements ActionListener {
             letterList.add(tile);
         }
     }
-
+    // actionevent that is performed when randomize button is clicked
     public void actionPerformed(ActionEvent e) {
         for (LetterTile tile:letterList) {
             tile.SetRandomRGB();
@@ -260,9 +254,8 @@ class MosaicFrame extends JFrame implements ActionListener {
         }
         repaint();
     }
-
 }
-
+// main class that creates Jframe object and sets visibility
 public class Mosaic {
     public static void main(String[] args) {
         System.out.println("Mosaic Starting...");
